@@ -47,9 +47,10 @@ android {
 
 dependencies {
 
-    implementation ("androidx.appcompat:appcompat:1.1.0-alpha02")
-    implementation ("androidx.core:core-ktx:1.1.0-alpha04")
-    implementation ("androidx.lifecycle:lifecycle-extensions:2.0.0")
+    implementation("androidx.appcompat:appcompat:1.1.0-alpha02")
+    implementation("androidx.core:core-ktx:1.1.0-alpha04")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.0.0")
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

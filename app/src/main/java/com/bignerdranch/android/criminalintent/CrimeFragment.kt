@@ -53,7 +53,7 @@ class CrimeFragment : Fragment() {
 
         val titleWatcher = object : TextWatcher {
 
-            // Этот метод вызывается перед изменением текста в EditText
+            // Этот метод вызывается перед изменением текста в EditText, можно записать условие проверки вводимого текста.
             override fun beforeTextChanged(
                 sequence: CharSequence?,
                 start: Int,
@@ -63,6 +63,7 @@ class CrimeFragment : Fragment() {
                 // Это пространство оставлено пустым специально по заданию
             }
 
+            //Вызывается при изменении текста.
             //Функция возвращает строку и использует её для названия заголовка, показывает все что мы введем в EditText
             override fun onTextChanged(
                 sequence: CharSequence?,
@@ -72,11 +73,13 @@ class CrimeFragment : Fragment() {
             ) {
                 crime.title = sequence.toString()
             }
+            //Вызывается после инменения текста
             //Функция показывает все что мы введем в EditText, но её параметр редактируемый
             override fun afterTextChanged(sequence: Editable?) {
                 // И это
             }
         }
+        //Прикрепляем TextWatcher к EditText
         bindingCrimeFragment.crimeTitle.addTextChangedListener(titleWatcher)
     }
 }

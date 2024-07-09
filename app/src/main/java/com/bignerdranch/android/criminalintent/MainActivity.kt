@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         //Добавляем фрагмент на экран, при условии, что он не null
         if (currentFragment == null) {
-            val fragment = CrimeFragment()
+            val fragment = CrimeListFragment.newInstance()
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.fragment_container, fragment)
