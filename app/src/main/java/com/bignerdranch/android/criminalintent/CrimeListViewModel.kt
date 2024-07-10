@@ -4,18 +4,7 @@ import androidx.lifecycle.ViewModel
 
 class CrimeListViewModel : ViewModel() {
 
-    //Создаем переменную хранящую изменяемый список преступлений.
-    val crimes = mutableListOf<Crime>()
+    private val crimeRepository = CrimeRepository.get()
+    val crimeListLiveData = crimeRepository.getCrimes()
 
-    /**
-     * Сохраняет в созданный список добавленное преступление.
-     */
-    init {
-        for (i in 0 until 100) {
-            val crime = Crime()
-            crime.title = "Crime #$i"
-            crime.isSolved = i % 2 == 0
-            crimes += crime
-        }
-    }
 }

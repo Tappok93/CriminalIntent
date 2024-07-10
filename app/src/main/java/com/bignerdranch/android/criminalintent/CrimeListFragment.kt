@@ -5,9 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,9 +19,8 @@ private const val TAG = "CrimeListFragment"
 class CrimeListFragment : Fragment() {
 
     lateinit var binding: FragmentCrimeListBinding
-    lateinit var bindingItemCrime: ListItemCrimeBinding
     private lateinit var crimeRecyclerView: RecyclerView
-    private var adapter: CrimeAdapter? = null
+    private var adapter: CrimeAdapter? = CrimeAdapter(emptyList())
 
     /**
      * Связываем фрагмент с классом CrimeListViewModel
@@ -30,9 +29,16 @@ class CrimeListFragment : Fragment() {
         ViewModelProviders.of(this)[CrimeListViewModel::class.java]
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d(TAG, "Total crimes: ${crimeListViewModel.crimes.size}")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        crimeListViewModel.crimeListLiveData.observe(
+            viewLifecycleOwner,
+            Observer { crimes ->
+                crimes?.let {
+                    Log.i(TAG, "Got crimes ${crimes.size}")
+                    updateUI(crimes)
+                }
+            })
     }
 
     override fun onCreateView(
@@ -41,17 +47,12 @@ class CrimeListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-//
-
         binding = FragmentCrimeListBinding.inflate(inflater, container, false)
-        bindingItemCrime = ListItemCrimeBinding.inflate(inflater, container, false)
         crimeRecyclerView = binding.crimeRecyclerView
         crimeRecyclerView.layoutManager = LinearLayoutManager(context)
-
-        updateUI()
+        crimeRecyclerView.adapter = adapter
 
         return binding.root
-        //return view
     }
 
     /**
@@ -62,11 +63,10 @@ class CrimeListFragment : Fragment() {
         View.OnClickListener {
 
         private val crime = Crime()
+        private val bindingItemCrime = ListItemCrimeBinding.bind(view)
         private val titleTextView = bindingItemCrime.crimeTitle
         private val dateTextView = bindingItemCrime.crimeDate
-
-        //private val solvedImageView = bindingItemCrime.crimeSolved
-        private val solvedImageView: ImageView = itemView.findViewById(R.id.crime_solved)
+        private val solvedImageView = bindingItemCrime.crimeSolved
 
         init {
             itemView.setOnClickListener(this)
@@ -117,8 +117,7 @@ class CrimeListFragment : Fragment() {
     /**
      * Создаём адаптер и подключаем к RecycleView
      */
-    private fun updateUI() {
-        val crimes = crimeListViewModel.crimes
+    private fun updateUI(crimes: List<Crime>) {
         adapter = CrimeAdapter(crimes)
         crimeRecyclerView.adapter = adapter
     }

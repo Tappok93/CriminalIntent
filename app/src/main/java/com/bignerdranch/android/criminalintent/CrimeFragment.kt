@@ -20,8 +20,6 @@ class CrimeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         crime = Crime()
-        //bindingCrimeFragment = FragmentCrimeBinding.inflate(layoutInflater)
-        //setContentView(bindingCrimeFragment.root) -  НЕ СРАБОТАЛА ФУНКЦИЯ. Уточнить: Работает только в  Activity !
     }
 
     /**
@@ -32,7 +30,6 @@ class CrimeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //val view = inflater.inflate(R.layout.fragment_crime, container, false)
 
         bindingCrimeFragment = FragmentCrimeBinding.inflate(inflater, container, false)
 
