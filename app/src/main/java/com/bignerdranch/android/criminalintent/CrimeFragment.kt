@@ -6,7 +6,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bignerdranch.android.criminalintent.databinding.FragmentCrimeBinding
 
@@ -73,6 +72,7 @@ class CrimeFragment : Fragment() {
             ) {
                 crime.title = sequence.toString()
             }
+
             //Вызывается после инменения текста
             //Функция показывает все что мы введем в EditText, но её параметр редактируемый
             override fun afterTextChanged(sequence: Editable?) {

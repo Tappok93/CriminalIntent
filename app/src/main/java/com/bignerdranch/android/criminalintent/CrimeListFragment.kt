@@ -5,13 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bignerdranch.android.criminalintent.databinding.FragmentCrimeBinding
 import com.bignerdranch.android.criminalintent.databinding.FragmentCrimeListBinding
 import com.bignerdranch.android.criminalintent.databinding.ListItemCrimeBinding
 
@@ -42,27 +41,54 @@ class CrimeListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        //Раздуваем фрагмент и передаём для работы LayoutManager
+//
+
         binding = FragmentCrimeListBinding.inflate(inflater, container, false)
+        bindingItemCrime = ListItemCrimeBinding.inflate(inflater, container, false)
         crimeRecyclerView = binding.crimeRecyclerView
         crimeRecyclerView.layoutManager = LinearLayoutManager(context)
-        Toast.makeText(requireContext(), "Activiti", Toast.LENGTH_SHORT).show()
 
         updateUI()
 
-        return view
+        return binding.root
+        //return view
     }
 
     /**
      * Создаём ViewHolder и помещаем в него TextView из list_item_crime
      */
-    private inner class CrimeHolder(view: View) : RecyclerView.ViewHolder(view) {
+    private inner class CrimeHolder(view: View) :
+        RecyclerView.ViewHolder(view),
+        View.OnClickListener {
+
+        private val crime = Crime()
         private val titleTextView = bindingItemCrime.crimeTitle
         private val dateTextView = bindingItemCrime.crimeDate
+
+        //private val solvedImageView = bindingItemCrime.crimeSolved
+        private val solvedImageView: ImageView = itemView.findViewById(R.id.crime_solved)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         fun setHolder(crime: Crime) {
             titleTextView.text = crime.title
             dateTextView.text = crime.date.toString()
+
+            //Если преступление раскрыто отображается ImageView
+            solvedImageView.visibility = if (crime.isSolved) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+
+        }
+
+        // Слушатель нажатий на View
+        override fun onClick(v: View?) {
+            Toast.makeText(context, "${crime.title} pressed!", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
