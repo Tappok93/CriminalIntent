@@ -14,6 +14,7 @@ interface CrimeDao {
     @Query("SELECT * FROM crime")
     fun getCrimes(): LiveData<List<Crime>>
 
+    //Аннотация Query для извлечения данных из БД, но не вставки
     @Query("SELECT * FROM crime WHERE id=(:id)")
     fun getCrime(id: UUID): LiveData<Crime?>
 }

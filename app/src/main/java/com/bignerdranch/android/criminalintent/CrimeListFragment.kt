@@ -29,6 +29,10 @@ class CrimeListFragment : Fragment() {
         ViewModelProviders.of(this)[CrimeListViewModel::class.java]
     }
 
+
+    /**
+     * Функция которая наблюдает observe за жизненым циклом фрагмента и в случаи его изменения реагирует и реализует логику
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         crimeListViewModel.crimeListLiveData.observe(

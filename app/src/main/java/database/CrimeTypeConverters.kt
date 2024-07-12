@@ -7,7 +7,7 @@ import java.util.UUID
 class CrimeTypeConverters {
 
     /**
-     * Обрабатываем объект Date
+     * Преобразовываем объект Date для хранения в БД и делаем обратное преобразование
      */
     @TypeConverter
     fun fromDate(date: Date?): Long? {
@@ -22,7 +22,7 @@ class CrimeTypeConverters {
     }
 
     /**
-     * Обрабатываем объект UUID
+     * реобразовываем объект UUID для хранения в БД и делаем обратное преобразование
      */
     @TypeConverter
     fun toUUID(uuid: String?): UUID? {
