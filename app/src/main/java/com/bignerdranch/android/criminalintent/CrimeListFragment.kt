@@ -1,5 +1,6 @@
 package com.bignerdranch.android.criminalintent
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,12 +14,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.criminalintent.databinding.FragmentCrimeListBinding
 import com.bignerdranch.android.criminalintent.databinding.ListItemCrimeBinding
+import java.util.UUID
 
 private const val TAG = "CrimeListFragment"
 
 class CrimeListFragment : Fragment() {
 
-    lateinit var binding: FragmentCrimeListBinding
+    interface Callbacks {
+        fun onCrimeSelected(crimeId: UUID)
+    }
+
+    private var callbacks: Callbacks? = null
+    private lateinit var binding: FragmentCrimeListBinding
     private lateinit var crimeRecyclerView: RecyclerView
     private var adapter: CrimeAdapter? = CrimeAdapter(emptyList())
 
@@ -29,21 +36,34 @@ class CrimeListFragment : Fragment() {
         ViewModelProviders.of(this)[CrimeListViewModel::class.java]
     }
 
+    /**
+     * Функция вызыввается при присоединении фрагмента к контексту
+     */
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
+        }
 
     /**
      * Функция которая наблюдает observe за жизненым циклом фрагмента и в случаи его изменения реагирует и реализует логику
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        crimeListViewModel.crimeListLiveData.observe(
-            viewLifecycleOwner,
-            Observer { crimes ->
-                crimes?.let {
-                    Log.i(TAG, "Got crimes ${crimes.size}")
-                    updateUI(crimes)
-                }
-            })
+        crimeListViewModel.crimeListLiveData.observe(viewLifecycleOwner) { crimes ->
+            crimes?.let {
+                Log.i(TAG, "Got crimes ${crimes.size}")
+                updateUI(crimes)
+            }
+        }
     }
+
+    /**
+     * Функция вызыввается при отсоединении фрагмента и устанавливает callback в null
+     */
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -91,8 +111,7 @@ class CrimeListFragment : Fragment() {
 
         // Слушатель нажатий на View
         override fun onClick(v: View?) {
-            Toast.makeText(context, "${crime.title} pressed!", Toast.LENGTH_SHORT)
-                .show()
+            callbacks?.onCrimeSelected(crime.id)
         }
     }
 

@@ -19,7 +19,7 @@ android {
     }
 
 
-        buildFeatures {
+    buildFeatures {
         compose = true
         viewBinding = true
     }
@@ -44,16 +44,22 @@ android {
         jvmTarget = "1.8"
     }
 
+
 }
 
 dependencies {
 
     val room_version = "2.6.1"
+    val lifecycle_version = "2.5.1"
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
 
     implementation("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-runtime:2.1.0-alpha04")
     kapt("androidx.room:room-compiler:2.1.0-alpha04")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     implementation("androidx.appcompat:appcompat:1.1.0-alpha02")
     implementation("androidx.core:core-ktx:1.1.0-alpha04")
