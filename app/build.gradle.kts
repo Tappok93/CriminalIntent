@@ -1,3 +1,5 @@
+var lifecycle_version = "2.5.1"
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -5,6 +7,7 @@ plugins {
 }
 
 android {
+
     namespace = "com.bignerdranch.android.criminalintent"
     compileSdk = 34
 
@@ -44,13 +47,15 @@ android {
         jvmTarget = "1.8"
     }
 
-
 }
 
 dependencies {
 
+
     val room_version = "2.6.1"
-    val lifecycle_version = "2.5.1"
+
+
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
 
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
