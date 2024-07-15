@@ -1,5 +1,3 @@
-var lifecycle_version = "2.5.1"
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -51,14 +49,7 @@ android {
 
 dependencies {
 
-
     val room_version = "2.6.1"
-
-
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
 
     implementation("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")

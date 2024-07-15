@@ -102,10 +102,22 @@ class CrimeFragment : Fragment() {
         bindingCrimeFragment.crimeTitle.addTextChangedListener(titleWatcher)
     }
 
+    /**
+     * При переходе в onStop (когда фрагмент будет вне поля зрения пользователя), сохраняет изменения данных в БД
+     */
+    override fun onStop() {
+        super.onStop()
+        crimeDetailViewModel.saveCrime(crime)
+    }
+
     private fun updateUI() {
         bindingCrimeFragment.crimeTitle.setText(crime.title)
         bindingCrimeFragment.crimeDate.text = crime.date.toString()
-        bindingCrimeFragment.crimeSolved.isChecked = crime.isSolved
+
+        bindingCrimeFragment.crimeSolved.apply {
+            bindingCrimeFragment.crimeSolved.isChecked = crime.isSolved
+            jumpDrawablesToCurrentState()
+        }
     }
 
     companion object {
