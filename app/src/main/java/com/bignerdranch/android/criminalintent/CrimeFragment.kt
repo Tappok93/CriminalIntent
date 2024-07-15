@@ -14,6 +14,7 @@ import java.util.UUID
 
 private const val TAG = "CrimeFragment"
 private const val ARG_CRIME_ID = "crime_id"
+private const val DIALOG_DATE = "DialogDate"
 
 class CrimeFragment : Fragment() {
 
@@ -43,11 +44,6 @@ class CrimeFragment : Fragment() {
 
         bindingCrimeFragment = FragmentCrimeBinding.inflate(inflater, container, false)
 
-        // Выключение кнопки
-        bindingCrimeFragment.crimeDate.apply {
-            text = crime.date.toString()
-            isEnabled = false
-        }
         return bindingCrimeFragment.root
     }
 
@@ -93,14 +89,23 @@ class CrimeFragment : Fragment() {
             }
 
             //Вызывается после инменения текста
-            //Функция показывает все что мы введем в EditText, но её параметр редактируемый
+            // Вызывается после инменения текста. Функция показывает все что мы введем в EditText, но её параметр редактируемый
             override fun afterTextChanged(sequence: Editable?) {
                 // И это
             }
         }
         //Прикрепляем TextWatcher к EditText
         bindingCrimeFragment.crimeTitle.addTextChangedListener(titleWatcher)
+
+        //Слушатель при нажатии на кнопку DateBTN который открывает диалоговое окно выбора даты
+        bindingCrimeFragment.crimeDate.setOnClickListener {
+            DatePickerFragment().apply {
+                show(this@CrimeFragment.requireFragmentManager(), DIALOG_DATE)
+            }
+        }
     }
+
+
 
     /**
      * При переходе в onStop (когда фрагмент будет вне поля зрения пользователя), сохраняет изменения данных в БД
