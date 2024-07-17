@@ -11,8 +11,11 @@ class CrimeDetailViewModel : ViewModel() {
     private val crimeRepository = CrimeRepository.get()
     private val crimeIdLiveData = MutableLiveData<UUID>()
 
+    /**
+     * Добавление ViewModel в CrimeFragment
+      */
     var crimeLiveData: LiveData<Crime?> =
-        crimeIdLiveData.switchMap{ crimeId ->
+        crimeIdLiveData.switchMap { crimeId ->
             crimeRepository.getCrime(crimeId)
         }
 
@@ -21,7 +24,7 @@ class CrimeDetailViewModel : ViewModel() {
      */
     fun saveCrime(crime: Crime) {
         crimeRepository.updateCrime(crime)
-        }
+    }
 
     /**
      * Функция загрузки преступления по id

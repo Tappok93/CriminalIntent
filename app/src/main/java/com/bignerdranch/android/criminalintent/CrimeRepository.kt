@@ -22,7 +22,7 @@ class CrimeRepository private constructor(context: Context) {
 
     private val crimeDao = database.crimeDao()
 
-    //Создаёт новый поток (гарантирует последовательное выполение задач не в основном потоке, а в созданном)
+    //Исполнитель. Создаёт новый поток (гарантирует последовательное выполение задач не в основном потоке, а в созданном)
     private val executor = Executors.newSingleThreadExecutor()
 
     // Реализация функций интерфейса CrimeDao
